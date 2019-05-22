@@ -44,8 +44,11 @@ RUN /container/tool/install-service
 # Add default env variables
 ADD environment /container/environment/99-default
 
+RUN ln -s /config /etc/ldap/slapd.d \
+  && ln -s /database /var/lib/ldap
+
 # Expose default ldap and ldaps ports
 EXPOSE 389 636
 
 # Put ldap config and database dir in a volume to persist data.
-VOLUME /etc/ldap/slapd.d /var/lib/ldap
+VOLUME /config /database
